@@ -3,6 +3,7 @@ import * as path from "path";
 import * as http from "http";
 import * as sss from "send-status-json";
 import * as ws from "websocket";
+import * as bodyParser from "body-parser";
 
 import * as logger from "./logger";
 import { Response, Request } from "./types";
@@ -26,6 +27,8 @@ export const launch = (options: ServerOptions) => {
     const wsConnManager = new WebsocketConnectionManager(wsServer, logger.getLogger());
 
     app.use(sss.sendStatusJsonMiddleware());
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
 
     // Register path for serving index.html file
     app.get("/", (req: Request, res: Response) => {

@@ -29,6 +29,7 @@
     "websocket": "^1.0.24"
   },
   "devDependencies": {
+    "@types/body-parser": "^1.16.5",
     "@types/dotenv": "^4.0.1",
     "@types/express": "^4.0.37",
     "@types/moment": "^2.13.0",
