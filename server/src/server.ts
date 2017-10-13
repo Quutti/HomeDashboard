@@ -8,6 +8,7 @@ import * as bodyParser from "body-parser";
 import * as logger from "./logger";
 import { Response, Request } from "./types";
 import { WebsocketConnectionManager } from "./websocket-connection-manager";
+import { ActionRegistry } from "./actions/registry";
 
 export interface ServerOptions {
     port: number;
@@ -25,6 +26,7 @@ export const launch = (options: ServerOptions) => {
     const server = http.createServer(app);
     const wsServer = new ws.server({ httpServer: server });
     const wsConnManager = new WebsocketConnectionManager(wsServer, logger.getLogger());
+    const actionRegistry = new ActionRegistry(logger.getLogger());
 
     app.use(sss.sendStatusJsonMiddleware());
     app.use(bodyParser.json());
@@ -36,16 +38,19 @@ export const launch = (options: ServerOptions) => {
         res.sendStatusJson(200);
     });
 
+    // Register actions from the action registry
+    app.post("/actions", actionRegistry.register());
+
     // Register static files path
     app.use("/assets", express.static(path.join(...STATIC_FILES_PATH_PARTS)));
 
     app.use((req: Request, res: Response) => {
-        logger.log(`404 - ${req.originalUrl}`);
+        logger.log(`404 - (${req.method} ${req.originalUrl}`);
         res.sendStatusJson(404);
     });
 
     app.use((err: any, req: Request, res: Response, next: express.NextFunction) => {
-        logger.log(`500 - ${req.originalUrl}`);
+        logger.error(`500 - Error with request to ${req.originalUrl}`);
         logger.error(JSON.stringify(err))
         res.sendStatusJson(500);
     })

@@ -55,8 +55,8 @@ export class WebsocketConnectionManager {
         this._clients = [];
     }
 
-    public sendAll(event: string, data: any): void {
-        const payload = JSON.stringify({ event, data });
+    public sendAll(action: string, data: any): void {
+        const payload = JSON.stringify({ action, data });
         this._clients.forEach((client) => client.sendUTF(payload));
     }
 
