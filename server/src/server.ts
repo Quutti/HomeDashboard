@@ -37,10 +37,13 @@ export const launch = (options: ServerOptions) => {
     app.use("/assets", express.static(path.join(...STATIC_FILES_PATH_PARTS)));
 
     app.use((req: Request, res: Response) => {
+        logger.log(`404 - ${req.originalUrl}`);
         res.sendStatusJson(404);
     });
 
     app.use((err: any, req: Request, res: Response, next: express.NextFunction) => {
+        logger.log(`500 - ${req.originalUrl}`);
+        logger.error(JSON.stringify(err))
         res.sendStatusJson(500);
     })
 
