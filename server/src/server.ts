@@ -2,9 +2,11 @@ import * as express from "express";
 import * as path from "path";
 import * as http from "http";
 import * as sss from "send-status-json";
+import * as ws from "websocket";
 
 import * as logger from "./logger";
 import { Response, Request } from "./types";
+import { WebsocketConnectionManager } from "./websocket-connection-manager";
 
 export interface ServerOptions {
     port: number;
@@ -16,10 +18,12 @@ export const launch = (options: ServerOptions) => {
         ? [__dirname, "..", "..", "client", "dist"]
         : [__dirname, "..", "public"];
 
+    logger.initLogger(console);
+
     const app = express();
     const server = http.createServer(app);
-
-    logger.initLogger(console);
+    const wsServer = new ws.server({ httpServer: server });
+    const wsConnManager = new WebsocketConnectionManager(wsServer, logger.getLogger());
 
     app.use(sss.sendStatusJsonMiddleware());
 
