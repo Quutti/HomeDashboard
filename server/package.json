@@ -1,0 +1,38 @@
+{
+  "name": "homedashboard-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "./node_modules/.bin/nodemon --exec ts-node ./src/server.ts",
+    "start": "node ./dist/server.js"
+  },
+  "keywords": [
+    "home",
+    "home-automation",
+    "dashboard",
+    "ikea-trådfri",
+    "arduino"
+  ],
+  "author": "Jokke Liikkanen <quutticode@gmail.com>",
+  "repository": {
+    "git": "https://github.com/Quutti/HomeDashboard.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "websocket": "^1.0.24"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^4.0.1",
+    "@types/express": "^4.0.37",
+    "@types/node": "^8.0.34",
+    "@types/websocket": "0.0.34",
+    "nodemon": "^1.12.1",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.5.3"
+  }
+}
