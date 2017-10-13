@@ -3,6 +3,7 @@ import * as path from "path";
 import * as http from "http";
 import * as sss from "send-status-json";
 
+import * as logger from "./logger";
 import { Response, Request } from "./types";
 
 export interface ServerOptions {
@@ -17,6 +18,8 @@ export const launch = (options: ServerOptions) => {
 
     const app = express();
     const server = http.createServer(app);
+
+    logger.initLogger(console);
 
     app.use(sss.sendStatusJsonMiddleware());
 
@@ -38,6 +41,6 @@ export const launch = (options: ServerOptions) => {
     })
 
     server.listen(options.port, () => {
-        console.log(`HomeDashboard server listening on port ${options.port}`);
+        logger.log(`HomeDashboard server listening on port ${options.port}`);
     });
 }
