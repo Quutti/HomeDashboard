@@ -45,15 +45,14 @@ export const launch = (options: ServerOptions) => {
 
     // Register path for serving index.html file
     app.get("/", (req: Request, res: Response) => {
-        //res.sendFile(path.join(...STATIC_FILES_PATH_PARTS, "index.html"));
-        res.sendStatusJson(200);
+        res.sendFile(path.join(...STATIC_FILES_PATH_PARTS, "index.html"));
     });
 
     // Register actions from the action registry
     app.post("/actions", registerActionEndpoint(actionRegistry));
 
     // Register static files path
-    app.use("/assets", express.static(path.join(...STATIC_FILES_PATH_PARTS)));
+    app.use("/assets", express.static(path.join(...STATIC_FILES_PATH_PARTS, "assets")));
 
     app.use((req: Request, res: Response) => {
         logger.log(`404 - (${req.method} ${req.originalUrl}`);
