@@ -1,0 +1,27 @@
+:root {
+    --body-bg: #dddddd;
+
+    --navbar-bg: #5cb85c;
+    --navbar-height: 56px;
+
+    --sidemenu-bg: #3a4651;
+    --sidemenu-width: 230px;
+
+    --font-base-family: "Roboto";
+    --font-base-size: 14px;
+    --font-base-color: #333333;
+
+    --border-base-radius: 4px;
+
+    --padding: 15px;
+    --margin: var(--padding);
+
+    --padding-lg: 20px;
+    --margin-lg: var(--padding-lg);
+
+    --padding-sm: 10px;
+    --margin-sm: var(--padding-sm);
+
+    --padding-xs: 5px;
+    --margin-xs: var(--padding-xs);
+}

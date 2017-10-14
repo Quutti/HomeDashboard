@@ -3,6 +3,8 @@ import * as ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import { Route } from "react-router";
 
+import './styles/globals/main.global.css';
+
 import { WebSocketClient } from "./common/websocket-client";
 
 import { AppRoutes } from "./routes";

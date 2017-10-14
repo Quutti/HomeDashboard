@@ -1,0 +1,8 @@
+@import "../variables.css";
+
+body {
+    font-family: var(--font-base-family);
+    font-size: var(--font-base-size);
+    color: var(--font-base-color);
+    background-color: var(--body-bg);
+}
