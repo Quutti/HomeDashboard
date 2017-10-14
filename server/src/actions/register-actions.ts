@@ -1,6 +1,7 @@
 
 import { IRegisterableAction, ActionData } from "./base";
 import { ActionRegistry } from "./registry";
+import { SystemMonitorAction } from "./system-monitor-action";
 
 export type SendDataHandler = (actionData: ActionData) => void;
 
@@ -12,4 +13,5 @@ export const registerActions = (actionRegistry: ActionRegistry, sendDataHandler:
         actionRegistry.add(action);
     }
 
+    register(SystemMonitorAction, "system-monitor");
 }
