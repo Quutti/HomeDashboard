@@ -2,15 +2,17 @@
 import { BaseRegisterableAction, ActionData } from "./base";
 
 interface CPUStats {
-    load: number[];
-    cores: number;
+    load: number;
     temp: number;
 }
 
-interface MemStats {
-    max: number;
+interface Mem {
+    total: number;
     used: number;
-    swap: MemStats;
+}
+
+interface MemStats extends Mem {
+    swap: Mem;
 }
 
 export interface SystemMonitorData {
