@@ -9,10 +9,11 @@ from urllib.request import Request, urlopen
 def get_cpu_temp():
     ''' Gets temp information of the CPU (currently supports only Raspberry PI) '''
     try:
+        # In RaspberryPi use custom endpoint to fetch temp data
         raspTemp = subprocess.Popen(["/opt/vc/bin/vcgencmd", "measure_temp"], stdout=subprocess.PIPE)
         tempData = raspTemp.communicate()[0]
         if raspTemp.returncode == 0:
-            # in RaspberryPi temp with measure_temp is returned in a format 46.5'C
+            # in RaspberryPi temp with measure_temp is returned in a format temp=46.5'C
             return float(tempData.split('=')[1].split("'")[0])
         else:
             return None
@@ -28,6 +29,7 @@ def get_mem_json():
 
     memList = list(map(str.strip, lines[0].split()))
 
+    # Default swap data
     swapTotal = 0
     swapUsed = 0
 
@@ -47,7 +49,6 @@ def get_mem_json():
 
 def get_cpu_json():
     ''' Collect CPU load and temp information from the Unix system '''
-    # top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1}'
     top = subprocess.Popen(["top", "-bn1"], stdout=subprocess.PIPE)
     grep = subprocess.Popen(["grep", "-E", "Cpu"], stdin=top.stdout, stdout=subprocess.PIPE)
 
@@ -77,6 +78,8 @@ post_data = {
         'cpu': get_cpu_json()
     }
 }
+
+# Create post request to the url passed as argument
 
 print("Sending HTTP request to " + url)
 
