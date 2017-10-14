@@ -8,6 +8,7 @@ import * as bodyParser from "body-parser";
 import * as logger from "./logger";
 import { Response, Request } from "./types";
 import { WebsocketConnectionManager } from "./websocket-connection-manager";
+import { registerActionRegistry } from "./actions/register";
 import { ActionRegistry } from "./actions/registry";
 
 export interface ServerOptions {
@@ -26,7 +27,7 @@ export const launch = (options: ServerOptions) => {
     const server = http.createServer(app);
     const wsServer = new ws.server({ httpServer: server });
     const wsConnManager = new WebsocketConnectionManager(wsServer, logger.getLogger());
-    const actionRegistry = new ActionRegistry(logger.getLogger());
+    const actionRegistry = new ActionRegistry();
 
     app.use(sss.sendStatusJsonMiddleware());
     app.use(bodyParser.json());
@@ -39,7 +40,7 @@ export const launch = (options: ServerOptions) => {
     });
 
     // Register actions from the action registry
-    app.post("/actions", actionRegistry.register());
+    app.post("/actions", registerActionRegistry(actionRegistry));
 
     // Register static files path
     app.use("/assets", express.static(path.join(...STATIC_FILES_PATH_PARTS)));

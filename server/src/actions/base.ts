@@ -15,6 +15,8 @@ export abstract class BaseRegisterableAction implements IRegisterableAction {
         this._name = name;
     }
 
+    protected abstract _doProcessData(data: any): Promise<void>;
+
     public getName(): string {
         return this._name;
     }
@@ -23,5 +25,8 @@ export abstract class BaseRegisterableAction implements IRegisterableAction {
         this._onAfterProcessData.add(listener);
     }
 
-    public abstract processData(data: any): Promise<void>;
+    public processData(data: any): Promise<void> {
+        return this._doProcessData(data)
+            .then(() => this._onAfterProcessData.fire());
+    }
 }
