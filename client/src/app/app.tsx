@@ -8,15 +8,23 @@ import './styles/globals/main.global.css';
 import { WebSocketClient } from "./common/websocket-client";
 
 import { AppRoutes } from "./routes";
+import { NavigationBar } from "./components/navigation-bar"
 
 const webSocketClient = new WebSocketClient('ws://' + document.location.host);
 webSocketClient.subscribeAction('system-monitor', (data) => console.log("Got data", data));
 
+const handleMenuButtonClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
+
+}
+
 ReactDOM.render(
     (
         <BrowserRouter>
-            <div className="page-wrapper">
-                <AppRoutes />
+            <div>
+                <NavigationBar brand="HomeDashboard" onMenuButtonClick={handleMenuButtonClick} />
+                <div className="page-wrapper">
+                    <AppRoutes />
+                </div>
             </div>
         </BrowserRouter>
     ),

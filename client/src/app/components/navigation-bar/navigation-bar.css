@@ -1,0 +1,26 @@
+@import "../../styles/variables.css";
+
+.root {
+    height: var(--navbar-height);
+    line-height: var(--navbar-height);
+    background-color: var(--navbar-bg);
+}
+
+.menuButton {
+    border: 0;
+    background: transparent;
+    margin-left: var(--margin);
+    font-size: 1.4em;
+    color: #fff;
+    cursor: pointer;
+}
+
+.brand {
+    color: #fff;
+    font-size: 1.4em;
+    margin: 0 var(--margin-lg);
+
+    &:hover {
+        color: #fff;
+    }
+}
