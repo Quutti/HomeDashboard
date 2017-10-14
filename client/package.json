@@ -25,6 +25,7 @@
   "license": "MIT",
   "dependencies": {
     "bootstrap": "^4.0.0-beta",
+    "classnames": "^2.2.5",
     "d3": "^4.11.0",
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.4",
