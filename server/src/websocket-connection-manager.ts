@@ -9,8 +9,8 @@ export class WebsocketConnectionManager {
     private _wsServer: ws.server;
     private _clients: ws.connection[] = [];
 
-    private _onFirstClientConnect = new customEvent.CustomEvent();
-    private _onLastClientDisconnect = new customEvent.CustomEvent();
+    private _onFirstClientConnect = new customEvent.CustomEvent<void>();
+    private _onLastClientDisconnect = new customEvent.CustomEvent<void>();
 
     constructor(wsServer: ws.server, logger: ILogger) {
         this._wsServer = wsServer;
@@ -42,11 +42,11 @@ export class WebsocketConnectionManager {
         });
     }
 
-    public onFirstClientConnect(listener: customEvent.CustomEventListener) {
+    public onFirstClientConnect(listener: customEvent.CustomEventListener<void>) {
         this._onFirstClientConnect.add(listener);
     }
 
-    public onLastClientDisconnect(listener: customEvent.CustomEventListener) {
+    public onLastClientDisconnect(listener: customEvent.CustomEventListener<void>) {
         this._onLastClientDisconnect.add(listener);
     }
 

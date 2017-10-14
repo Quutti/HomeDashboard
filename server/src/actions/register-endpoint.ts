@@ -4,7 +4,7 @@ import * as logger from "../logger";
 import { IRegisterableAction } from "./base";
 import { Request, Response, IRegistry } from "../types";
 
-export const registerActionRegistry = (actionRegistry: IRegistry<IRegisterableAction>): RequestHandler => {
+export const registerActionEndpoint = (actionRegistry: IRegistry<IRegisterableAction>): RequestHandler => {
 
     const actions = actionRegistry.getAll();
 
