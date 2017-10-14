@@ -1,14 +1,8 @@
 import * as express from "express";
 
-import { Request, Response } from "../types";
+import { Request, Response, IRegistry } from "../types";
 import { ILogger } from "../logger";
 import * as base from "./base";
-
-export interface IRegistry<T> {
-    add(action: T): void;
-    get(name: string): T;
-    getAll(): T[];
-}
 
 export class ActionRegistry implements IRegistry<base.IRegisterableAction> {
 

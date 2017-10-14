@@ -1,9 +1,8 @@
 import { RequestHandler } from "express";
 
 import * as logger from "../logger";
-import { IRegistry } from "./registry";
 import { IRegisterableAction } from "./base";
-import { Request, Response } from "../types";
+import { Request, Response, IRegistry } from "../types";
 
 export const registerActionRegistry = (actionRegistry: IRegistry<IRegisterableAction>): RequestHandler => {
 
