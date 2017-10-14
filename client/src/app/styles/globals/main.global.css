@@ -6,3 +6,11 @@ body {
     color: var(--font-base-color);
     background-color: var(--body-bg);
 }
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: disabled;
+}

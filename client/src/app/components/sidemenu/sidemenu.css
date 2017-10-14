@@ -1,0 +1,66 @@
+@import "../../styles/variables.css";
+
+.root {
+    visibility: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 1000;
+
+    &.rootVisible {
+        visibility: visible
+    }
+}
+
+.shroud {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+
+    opacity: 0;
+    transition: opacity .2s ease;
+
+    &.shroudVisible {
+        opacity: 1;
+    }
+}
+
+.menu {
+    position: absolute;
+    width: var(--sidemenu-width);
+    height: 100%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: var(--sidemenu-bg); 
+
+    transform: translateX(-105%);
+    transition: transform .2s ease;
+
+    &.menuVisible {
+        transform: translateX(0);
+    }
+}
+
+.menuHeader {
+    height: var(--navbar-height);
+    line-height: var(--navbar-height);
+}
+
+.closeButton {
+    background: transparent;
+    border: 0;
+    font-size: 1.4em;
+    color: #fff;
+    margin-right: var(--margin-sm);
+}
+
+.menuBody {
+
+}
