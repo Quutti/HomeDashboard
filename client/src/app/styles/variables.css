@@ -1,7 +1,11 @@
 :root {
-    --body-bg: #dddddd;
+    --body-bg: #efefef;
 
-    --navbar-bg: #5cb85c;
+    --primary-color: #5cb85c;
+    --error-color: #b85c5c;
+    --warning-color: #b8a45c;
+
+    --navbar-bg: var(--primary-color);
     --navbar-height: 56px;
 
     --sidemenu-bg: #3a4651;

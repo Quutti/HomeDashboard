@@ -1,0 +1,30 @@
+@import "../../styles/variables.css";
+
+.svg {
+    width: 100%;
+}
+
+.valuePath {
+    fill: var(--primary-color);
+}
+
+.valuePathWarning {
+    fill: var(--warning-color);
+}
+
+.valuePathError {
+    fill: var(--error-color);
+}
+
+.levelMarker {
+     fill: none;
+     stroke: rgba(40, 40, 40, 0.35)
+}
+
+.levelText {
+    font-size: .75em;
+}
+
+.valueText {
+    font-size: 1.2em;
+}
