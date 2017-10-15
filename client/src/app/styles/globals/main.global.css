@@ -14,3 +14,7 @@ button {
 button:disabled {
     cursor: disabled;
 }
+
+.row > .col {
+    padding: 0;
+}
