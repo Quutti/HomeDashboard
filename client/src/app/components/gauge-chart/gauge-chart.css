@@ -22,9 +22,15 @@
 }
 
 .levelText {
-    font-size: .75em;
+    font-size: .85em;
 }
 
 .valueText {
-    font-size: 1.2em;
+    font-size: 1.35em;
+}
+
+.unitText {
+    fill: var(--secondary-text-color);
+    font-size: 1em;
+    text-transform: uppercase;
 }

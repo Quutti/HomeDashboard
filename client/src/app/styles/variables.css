@@ -5,6 +5,9 @@
     --error-color: #b85c5c;
     --warning-color: #b8a45c;
 
+    --text-color: #333;
+    --secondary-text-color: #777;
+
     --navbar-bg: var(--primary-color);
     --navbar-height: 56px;
 
@@ -13,7 +16,7 @@
 
     --font-base-family: "Roboto";
     --font-base-size: 14px;
-    --font-base-color: #333333;
+    --font-base-color: var(--text-color);
 
     --border-base-radius: 4px;
 

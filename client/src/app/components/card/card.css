@@ -19,7 +19,7 @@
 .description {
     text-transform: uppercase;
     font-size: 0.9em;
-    color: #777;
+    color: var(--secondary-text-color);
     margin: var(--margin-xs) 0 0;
 }
 

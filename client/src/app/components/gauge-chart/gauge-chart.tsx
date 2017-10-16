@@ -10,12 +10,14 @@ interface OwnProps {
     min: number;
     max: number;
     value: number;
+    unitText?: string;
     valueTextBuilder?: (value: number) => string;
     warningLevel?: number;
     errorLevel?: number;
 }
 
 interface ElementRefs {
+    container: HTMLDivElement;
     bgPath: SVGPathElement;
     valuePath: SVGPathElement;
     svg: SVGSVGElement;
@@ -26,10 +28,15 @@ interface XY {
     y: number;
 }
 
-const ARC_LENGTH = 0.7;
+interface Size {
+    width: number;
+    height: number;
+}
+
+const ARC_LENGTH = 0.5;
 const CIRCULATION = Math.PI * ARC_LENGTH;
 
-const GAUGE_WIDTH = 20;
+const GAUGE_WIDTH = 60;
 const INNER_RADIUS = 60;
 const OUTER_RADIUS = INNER_RADIUS + GAUGE_WIDTH;
 
@@ -39,18 +46,17 @@ export class GaugeChart extends React.Component<OwnProps, {}> {
         valueTextBuilder: (value: number) => "" + value
     }
 
-    private _elms: ElementRefs = { bgPath: null, valuePath: null, svg: null };
+    private _elms: ElementRefs = { bgPath: null, valuePath: null, svg: null, container: null };
     private _arc: d3.Arc<any, d3.DefaultArcObject> = null;
+    private _svgSize: Size = { width: 0, height: 0 }
 
     public render(): JSX.Element {
 
-        const { value, errorLevel, warningLevel, min, max, valueTextBuilder } = this.props;
+        const { value, errorLevel, warningLevel, min, max, valueTextBuilder, unitText } = this.props;
 
         if (this._elms.bgPath) {
             this._update()
         }
-
-        const centerPoint = this._getCenter();
 
         const gaugeClasses = classNames({
             [styles.valuePath]: true,
@@ -60,35 +66,50 @@ export class GaugeChart extends React.Component<OwnProps, {}> {
 
         const textValue = valueTextBuilder(value);
 
-        const halfRadius = OUTER_RADIUS / 2;
+        const { x, y } = this._getCenter();
+        const gaugeCenterFromCenterPoint = OUTER_RADIUS - OUTER_RADIUS * 0.25;
+        const xLeft = x - gaugeCenterFromCenterPoint;
+        const xRight = x + gaugeCenterFromCenterPoint;
+        const levelTextY = y + 15;
 
-        const xLeft = centerPoint.x - halfRadius;
-        const xRight = centerPoint.x + halfRadius;
-        const levelTextY = centerPoint.y + halfRadius + 10;
+        const { width, height } = this._svgSize;
 
         return (
-            <div className={styles.root}>
-                <svg className={styles.svg} ref={(ref) => this._elms.svg = ref}>
+            <div className={styles.root} ref={(ref) => this._elms.container = ref}>
+                <svg width={width} height={height} className={styles.svg} ref={(ref) => this._elms.svg = ref} viewBox="0 0 300 150" preserveAspectRatio="xMinYMin meet">
                     <g transform="translate(0,0)">
                         <path fill="#efefef" ref={(ref) => this._elms.bgPath = ref} />
                         <path className={gaugeClasses} ref={(ref) => this._elms.valuePath = ref} />
                     </g>
                     <g transform="translate(0,0)">
-                        <text x={centerPoint.x} y={centerPoint.y} textAnchor="middle" className={styles.valueText}>{textValue}</text>
+                        <text x={x} y={y - 15} textAnchor="middle" className={styles.valueText}>{textValue}</text>
+                        {unitText && <text x={x} y={y + 5} textAnchor="middle" className={styles.unitText}>{unitText}</text>}
                         <text x={xLeft} y={levelTextY} textAnchor="middle" className={styles.levelText}>{min}</text>
                         <text x={xRight} y={levelTextY} textAnchor="middle" className={styles.levelText}>{max}</text>
                     </g>
-                    <g transform="translate(0,0">
+                    <g transform="translate(0,0)">
                         {warningLevel && this._createLevelMarker(warningLevel)}
                         {errorLevel && this._createLevelMarker(errorLevel)}
                     </g>
                 </svg>
-            </div>
+            </div >
         );
     }
 
     public componentDidMount() {
+        this._updateSvgSize();
         this._create();
+        this.forceUpdate();
+
+        window.addEventListener("resize", this._handleResize.bind(this));
+    }
+
+    public componentWillUnmount() {
+        window.removeEventListener("resize", this._handleResize.bind(this));
+    }
+
+    private _handleResize() {
+        this._updateSvgSize();
         this.forceUpdate();
     }
 
@@ -99,18 +120,26 @@ export class GaugeChart extends React.Component<OwnProps, {}> {
             .outerRadius(OUTER_RADIUS)
             .startAngle(-CIRCULATION);
 
-        const centerPoint = this._getCenter();
+        const { x, y } = this._getCenter();
 
         const bgPath = d3.select(this._elms.bgPath)
-            .attr('transform', `translate(${centerPoint.x}, ${centerPoint.y})`)
+            .attr('transform', `translate(${x}, ${y})`)
             .datum({ endAngle: CIRCULATION })
             .attr('d', this._arc)
 
         const valuePath = d3.select(this._elms.valuePath)
             .datum({ endAngle: -CIRCULATION })
-            .attr('transform', `translate(${centerPoint.x}, ${centerPoint.y})`)
+            .attr('transform', `translate(${x}, ${y})`)
             .attr('d', this._arc);
 
+    }
+
+    private _updateSvgSize() {
+        const width = this._elms.container.clientWidth;
+        this._svgSize = {
+            width,
+            height: width / 2
+        }
     }
 
     private _update() {
@@ -131,8 +160,8 @@ export class GaugeChart extends React.Component<OwnProps, {}> {
         }
 
         return {
-            y: this._elms.svg.clientHeight / 2 + GAUGE_WIDTH / 2,
-            x: this._elms.svg.clientWidth / 2
+            y: 125,
+            x: 150
         }
     }
 
