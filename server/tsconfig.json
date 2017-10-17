@@ -1,14 +1,12 @@
 {
     "compilerOptions": {
+        "baseUrl": ".",
         "target": "es2015",
         "module": "commonjs",
         "outDir": "./dist",
-        "noImplicitAny": true
-    },
-    "include": [
-        "./src"
-    ],
-    "exclude": [
-        "./node_modules"
-    ]
+        "noImplicitAny": true,
+        "paths": {
+            "@shared/*": ["../shared/*"]
+        }
+    }
 }

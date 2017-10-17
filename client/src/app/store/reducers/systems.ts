@@ -13,7 +13,7 @@ const systems: Redux.Reducer<SystemState> = (state = initialState, action: any) 
     switch (action.type) {
 
         case SYSTEMS_RECEIVED:
-            return action.instances;
+            return objectAssign({}, state, { instances: action.instances });
 
         default:
             return state;

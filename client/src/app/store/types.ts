@@ -1,5 +1,5 @@
 
-
+import { System } from "@shared/types";
 
 export interface ROOTState {
     systems: SystemState;
@@ -10,5 +10,5 @@ export interface ROOTState {
 export const SYSTEMS_RECEIVED = "SYSTEMS_RECEIVED";
 
 export interface SystemState {
-    instances: any[]; // Shared typings later
+    instances: System[];
 }
