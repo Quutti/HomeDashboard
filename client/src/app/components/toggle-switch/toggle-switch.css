@@ -1,0 +1,76 @@
+@import "../../styles/variables.css";
+
+:root {
+    --width: 80px;
+    --height: 34px;
+    --handle-width: 24px;
+    --handle-height: 32px;
+    --base-width: 56px;
+}
+
+.container {
+    position: relative;
+    width: var(--width);
+    height: var(--height);
+    border: 1px solid #ccc;
+    overflow: hidden;
+    background-color: var(--body-bg);
+    cursor: pointer;
+} 
+
+.containerDisabled {
+    cursor: disabled;
+}
+
+.containerOn {
+    & .handle {
+        transform: translateX(var(--base-width));
+    }
+
+    & .baseOn {
+        transform: translateX(0);
+    }
+
+    & .baseOff {
+        transform: translateX(var(--width));
+    }
+}
+
+.base {
+    position: absolute;
+    text-transform: uppercase;
+    top: 0;
+    left: 0;
+    width: var(--base-width);
+    height: var(--height);
+    font-size: 1em;
+    line-height: var(--height);
+    transition: transform .3s ease;
+}
+
+.baseOn {
+    text-align: left;
+    color: #fff;
+    padding-left: var(--padding-sm);
+    background-color: var(--primary-color);
+    transform: translateX(-var(--base-width));
+}
+
+.baseOff {
+    text-align: right;
+    color: var(--text-color);
+    padding-right: var(--padding-sm);
+    transform: translateX(var(--handle-width));
+}
+
+.handle { 
+    position: absolute;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    width: var(--handle-width);
+    height: var(--handle-height);
+    top: 0;
+    left: 0;
+    transform: translateX(0);
+    transition: transform .3s ease;
+}
