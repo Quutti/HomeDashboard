@@ -4,6 +4,9 @@ import { Card } from "../../components/card";
 import { GaugeChart } from "../../components/gauge-chart";
 import { GridContainer, GridRow, GridCol } from "../../components/grid";
 
+import { List, ListItem } from "../../components/list";
+import { ToggleSwitch } from "../../components/toggle-switch";
+
 const styles: any = require("./dashboard.view.css");
 
 export class DashboardView extends React.Component<{}, {}> {
@@ -11,6 +14,36 @@ export class DashboardView extends React.Component<{}, {}> {
     public render(): JSX.Element {
         return (
             <div className={styles.dashboardContainer}>
+
+                <GridContainer>
+                    <GridRow verticalMiddle={true}>
+                        <GridCol xl={3} lg={3} md={6} sm={6}>
+                            <Card heading="Lamps">
+                                <List>
+                                    <ListItem>
+                                        <div style={{ "display": "flex", "align-items": "center" }}>
+                                            <div style={{ "flex": 2 }}>Bedroom table lamp</div>
+                                            <div style={{ "flex": 1, "text-align": "right" }}><ToggleSwitch /></div>
+                                        </div>
+                                    </ListItem>
+                                    <ListItem>
+                                        <div style={{ "display": "flex", "align-items": "center" }}>
+                                            <div style={{ "flex": 2 }}>Kitchen main</div>
+                                            <div style={{ "flex": 1, "text-align": "right" }}><ToggleSwitch /></div>
+                                        </div>
+                                    </ListItem>
+                                    <ListItem>
+                                        <div style={{ "display": "flex", "align-items": "center" }}>
+                                            <div style={{ "flex": 2 }}>Living room table lamp</div>
+                                            <div style={{ "flex": 1, "text-align": "right" }}><ToggleSwitch /></div>
+                                        </div>
+                                    </ListItem>
+                                </List>
+                            </Card>
+                        </GridCol>
+                    </GridRow>
+                </GridContainer>
+
                 <GridContainer>
                     <GridRow verticalMiddle={true}>
                         <GridCol xl={4}>
