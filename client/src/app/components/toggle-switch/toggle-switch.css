@@ -6,6 +6,7 @@
     --handle-width: 24px;
     --handle-height: 32px;
     --base-width: 56px;
+    --handle-movement: 54px;
 }
 
 .container {
@@ -16,6 +17,7 @@
     overflow: hidden;
     background-color: var(--body-bg);
     cursor: pointer;
+    display: inline-block;
 } 
 
 .containerDisabled {
@@ -24,7 +26,7 @@
 
 .containerOn {
     & .handle {
-        transform: translateX(var(--base-width));
+        transform: translateX(var(--handle-movement));
     }
 
     & .baseOn {
@@ -42,7 +44,7 @@
     top: 0;
     left: 0;
     width: var(--base-width);
-    height: var(--height);
+    height: var(--handle-height);
     font-size: 1em;
     line-height: var(--height);
     transition: transform .3s ease;
