@@ -1,0 +1,12 @@
+@import "../../styles/variables.css";
+
+.item {
+    display: block;
+    list-style-type: none;
+    border-bottom: 1px solid var(--body-bg);
+    padding: var(--padding-sm) 0;
+
+    &:last-child {
+        border-bottom: 0;
+    }
+}
