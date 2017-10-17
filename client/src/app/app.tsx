@@ -1,24 +1,16 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
 import { Route } from "react-router";
-
-import './styles/globals/main.global.css';
-
-import { WebSocketClient } from "./common/websocket-client";
+import { connect } from "react-redux";
 
 import { AppRoutes } from "./routes";
 import { NavigationBar } from "./components/navigation-bar";
 import { Sidemenu } from "./components/sidemenu";
 
-const webSocketClient = new WebSocketClient('ws://' + document.location.host);
-webSocketClient.subscribeAction('system-monitor', (data) => console.log("Got data", data));
-
 interface OwnState {
     sidemenuVisible: boolean;
 }
 
-class App extends React.Component<{}, OwnState> {
+class AppImpl extends React.Component<{}, OwnState> {
 
     constructor(props) {
         super(props);
@@ -32,15 +24,13 @@ class App extends React.Component<{}, OwnState> {
 
     public render(): JSX.Element {
         return (
-            <BrowserRouter>
-                <div>
-                    <NavigationBar brand="HomeDashboard" onMenuButtonClick={this._handleMenuButtonClick} />
-                    <Sidemenu visible={this.state.sidemenuVisible} />
-                    <div className="page-wrapper">
-                        <AppRoutes />
-                    </div>
+            <div>
+                <NavigationBar brand="HomeDashboard" onMenuButtonClick={this._handleMenuButtonClick} />
+                <Sidemenu visible={this.state.sidemenuVisible} />
+                <div className="page-wrapper">
+                    <AppRoutes />
                 </div>
-            </BrowserRouter>
+            </div>
         )
     }
 
@@ -50,4 +40,4 @@ class App extends React.Component<{}, OwnState> {
 
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+export const App = connect()(AppImpl);

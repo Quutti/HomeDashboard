@@ -29,7 +29,7 @@ module.exports = function getWebpackConfigs() {
     }
 
     config.entry = {
-        app: './src/app/app.tsx'
+        app: './src/app/main.tsx'
     }
 
     config.output = {
