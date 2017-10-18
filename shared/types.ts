@@ -8,16 +8,18 @@ export interface SystemCPUStats {
     temp: number;
 }
 
-export interface SystemMemEntry {
+export interface SystemAmountEntry {
     total: number;
     used: number;
 }
 
-export interface SystemMemStats extends SystemMemEntry {
-    swap: SystemMemEntry;
+export interface SystemMemStats extends SystemAmountEntry {
+    swap: SystemAmountEntry;
 }
 
 export interface SystemMonitorData {
     cpu: SystemCPUStats;
     memory: SystemMemStats;
+    storage: SystemAmountEntry;
+    uptime: number;
 }

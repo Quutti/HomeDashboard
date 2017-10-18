@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import os
+import socket
 import json
 import subprocess
 import argparse
@@ -65,6 +67,23 @@ def get_cpu_json():
         'load': load
     }
 
+def get_storage_json():
+    ''' Collect storage information '''
+    stats = os.statvfs("/")
+    total = stats.f_bsize * stats.f_blocks
+    return {
+        'total': total,
+        'used': total - (stats.f_bsize * stats.f_bavail)
+    }
+
+def get_uptime():
+    ''' Returns system uptime in ms '''
+    f = open("/proc/uptime", "r")
+    c = f.read()
+    # First word in file is a uptime in seconds
+    s = c.split(" ")[0]
+    return int(float(s) * 1000)
+
 # Arguments
 parser = argparse.ArgumentParser()
 parser.add_argument("-u", "--url", help="Send collected data to url", default="http://localhost/actions")
@@ -74,8 +93,14 @@ url = args.url
 post_data = {
     "action": "system-monitor",
     "data": {
-        'mem': get_mem_json(),
-        'cpu': get_cpu_json()
+        'name': socket.gethostname(),
+        'monitor': {
+            'cpu': get_cpu_json(),
+            'memory': get_mem_json(),
+            'storage': get_storage_json(),
+            'uptime': get_uptime()
+        }
+
     }
 }
 
