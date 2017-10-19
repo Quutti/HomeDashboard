@@ -99,7 +99,7 @@ module.exports = function getWebpackConfigs() {
 
     config.plugins = [
         new CopyWebpackPlugin([
-            { from: "src/public/images/**/*.*", to: "assets/img/[name].[ext]" },
+            { from: "src/public/img/**/*.*", to: "assets/img/[name].[ext]" },
 
             { from: 'node_modules/bootstrap/dist/css/bootstrap.min.css', to: 'assets/css/[name].[ext]' },
             { from: 'node_modules/font-awesome/css/font-awesome.min.css', to: 'assets/css/[name].[ext]' },
