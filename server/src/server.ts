@@ -61,7 +61,7 @@ export const launch = (options: ServerOptions) => {
 
     app.use((err: any, req: Request, res: Response, next: express.NextFunction) => {
         logger.error(`500 - Error with request to ${req.originalUrl}`);
-        logger.error(JSON.stringify(err))
+        logger.error(err);
         res.sendStatusJson(500);
     })
 

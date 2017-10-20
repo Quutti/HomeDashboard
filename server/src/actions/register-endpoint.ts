@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 
 import * as logger from "../logger";
-import { IRegisterableAction } from "./base";
+import { IRegisterableAction, ActionError } from "./base";
 import { Request, Response, IRegistry } from "../types";
 
 export const registerActionEndpoint = (actionRegistry: IRegistry<IRegisterableAction>): RequestHandler => {
@@ -28,12 +28,17 @@ export const registerActionEndpoint = (actionRegistry: IRegistry<IRegisterableAc
                 logger.log(`200 - Action "${action}" processed`);
                 res.sendStatusJson(200);
             })
-            .catch((err: any) => {
-                logger.error(`500 - Action "${action}" failed`);
-                if (err) {
-                    logger.error(JSON.stringify(err));
+            .catch((err: Error | ActionError) => {
+                if (err instanceof Error) {
+                    logger.error(`500 - Action "${action}" failed`);
+                    if (err) {
+                        logger.error(JSON.stringify(err));
+                    }
+                    res.sendStatusJson(500);
+                } else {
+                    // Custom error handling
+                    res.sendStatusJson(err.statusCode, err.payload);
                 }
-                res.sendStatusJson(500);
             });
     }
 }

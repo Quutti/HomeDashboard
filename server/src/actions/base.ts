@@ -11,6 +11,11 @@ export interface ActionData {
     data: any;
 }
 
+export interface ActionError {
+    statusCode: number;
+    payload: { [key: string]: any };
+}
+
 export abstract class BaseRegisterableAction implements IRegisterableAction {
 
     private _name: string;
