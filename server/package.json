@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "dev": "./node_modules/.bin/nodemon --exec ts-node ./src/main.ts",
+    "dev": "./node_modules/.bin/nodemon --exec ts-node -r tsconfig-paths/register ./src/main.ts",
     "start": "node ./dist/main.js"
   },
   "keywords": [
@@ -37,6 +37,7 @@
     "@types/websocket": "0.0.34",
     "nodemon": "^1.12.1",
     "ts-node": "^3.3.0",
+    "tsconfig-paths": "^2.3.0",
     "typescript": "^2.5.3"
   }
 }
